@@ -1,17 +1,23 @@
-import { ComponentProps, InputHTMLAttributes } from "react";
+import { ComponentProps, forwardRef, InputHTMLAttributes } from "react";
+import { CrossCircledIcon } from '@radix-ui/react-icons'
+import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
+import { cn } from "../../app/utils/cn";
 
 interface InputProps extends ComponentProps<'input'> {
   name: string;
+  error?: string;
 }
 
-export function Input({ placeholder, name, id, ...props }: InputProps) {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ placeholder, name, id, error, className, ...props }, ref) => {
   return (
     <div className="relative">
       <input
         {...props}
+        ref={ref}
         name={name}
         id={id ?? name}
-        className="bg-white w-full rounded-lg border border-gray-500 px-3 h-[52px] text-gray-800 pt-4 placeholder-shown:pt-0 peer focus:border-gray-800 transition-all outline-none"
+        className={cn("bg-white w-full rounded-lg border border-gray-500 px-3 h-[52px] text-gray-800 pt-4 placeholder-shown:pt-0 peer focus:border-gray-800 transition-all outline-none", error && '!border-red-900', className)}
         placeholder=" "
       />
       <label
@@ -19,6 +25,17 @@ export function Input({ placeholder, name, id, ...props }: InputProps) {
       >
         {placeholder}
       </label>
+
+      {error &&
+        (
+          <div className="flex gap-2 items-center mt-2 text-red-900">
+            <CrossCircledIcon />
+            <span className=" text-xs">{error}</span>
+          </div>
+        )
+      }
     </div>
   )
-}
+})
+
+Input.displayName = 'Input';
