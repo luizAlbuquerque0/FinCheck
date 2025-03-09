@@ -4,7 +4,7 @@ import { Input } from "../../components/Input";
 import { useRegisterController } from "./useRegisterController";
 
 export function Register() {
-  const { handleSubmit, errors, register } = useRegisterController();
+  const { handleSubmit, errors, register, isPending } = useRegisterController();
   return (
     <>
       <header className="flex flex-col items-center gap-4 text-center">
@@ -18,7 +18,7 @@ export function Register() {
         <Input type="string" placeholder="Nome" {...register('name')} error={errors.name?.message} />
         <Input type="email" placeholder="E-mail" {...register('email')} error={errors.email?.message} />
         <Input type="password" placeholder="Senha" {...register('password')} error={errors.password?.message} />
-        <Button type="submit" className="mt-2">Criar conta</Button>
+        <Button type="submit" className="mt-2" isLoading={isPending}>Criar conta</Button>
       </form>
     </>
   )
