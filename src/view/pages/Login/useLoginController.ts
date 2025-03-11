@@ -6,6 +6,7 @@ import { useMutation } from '@tanstack/react-query'
 import { signInParams } from '../../../app/services/AuthServices/SignIn'
 import { AuthServices } from '../../../app/services/AuthServices'
 import toast from 'react-hot-toast'
+import { useAuth } from '../../../app/hooks/useAuth'
 
 const schema = z.object({
   email: z.string().nonempty('E-mail é obrigatorio').email('informe um e-mail válido'),
@@ -29,9 +30,13 @@ export function useLoginController() {
     },
   })
 
+  const { signIn } = useAuth();
+
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
-      await mutateAsync(data)
+      const { accessToken } = await mutateAsync(data)
+
+      signIn(accessToken);
     } catch {
       toast.error('Erro ao logar')
     }
