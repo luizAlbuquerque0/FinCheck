@@ -14,9 +14,10 @@ export function useAccountsController(){
   return{
     setSliderStates,
     sliderStates,
-    windowWidth,
+    windowWidth, 
     toogleValuesVisibility,
     areValuesVisible ,
-    isLoading: true
+    isLoading: false,
+    accounts: []
   }
 }
