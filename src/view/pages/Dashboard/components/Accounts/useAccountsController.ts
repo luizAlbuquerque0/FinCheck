@@ -16,6 +16,7 @@ export function useAccountsController(){
     sliderStates,
     windowWidth,
     toogleValuesVisibility,
-    areValuesVisible 
+    areValuesVisible ,
+    isLoading: true
   }
 }
