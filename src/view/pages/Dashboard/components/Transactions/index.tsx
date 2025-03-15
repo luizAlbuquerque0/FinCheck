@@ -10,17 +10,22 @@ import { formatCurrency } from "../../../../../app/utils/formatCurrency";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
 import { useTransactionController } from "./useTransactionController";
 import { Spinner } from "../../../../components/Spinner";
+import EmptyState from "../../../../../assets/EmptyState.svg";
 
 export function Transactions() {
-  const { areValuesVisible, isLoading } = useTransactionController();
+  const { areValuesVisible, isLoading, transactions, isInitialLoading } =
+    useTransactionController();
+
+  const hasTransactions = transactions.length > 0;
+
   return (
     <div className="bg-gray-100 rounded-2xl w-full h-full p-10 flex flex-col">
-      {isLoading && (
+      {isInitialLoading && (
         <div className="h-full flex items-center justify-center">
           <Spinner className=" w-10 h-10" />
         </div>
       )}
-      {!isLoading && (
+      {!isInitialLoading && (
         <>
           <header className="">
             <div className="flex items-center justify-between">
@@ -54,49 +59,70 @@ export function Transactions() {
             </div>
           </header>
 
-          <div className="mt-4 space-y-2 flex-1 overflow-y-auto">
-            <div className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4">
-              <div className="flex-1 flex items-center gap-3">
-                <CategoryIcon type="expense" />
-                <div className="">
-                  <strong className="font-bold tracking-[-0.5px] block">
-                    Almoco
-                  </strong>
-                  <strong className="text-sm text-gray-600">04/12/20202</strong>
+          {(!hasTransactions || isLoading) && (
+            <div className="flex flex-col h-full justify-center items-center">
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <img src={EmptyState} alt="EmptyState" />
+                  <p className="text-gray-700">
+                    Não encontramos nenhuma transação!
+                  </p>
+                </>
+              )}
+            </div>
+          )}
+
+          {hasTransactions && !isLoading && (
+            <div className="mt-4 space-y-2 flex-1 overflow-y-auto">
+              <div className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4">
+                <div className="flex-1 flex items-center gap-3">
+                  <CategoryIcon type="expense" />
+                  <div className="">
+                    <strong className="font-bold tracking-[-0.5px] block">
+                      Almoco
+                    </strong>
+                    <strong className="text-sm text-gray-600">
+                      04/12/20202
+                    </strong>
+                  </div>
                 </div>
+
+                <span
+                  className={cn(
+                    "text-red-800 font-medium tracking-[-0.5px]",
+                    !areValuesVisible && "blur-sm"
+                  )}
+                >
+                  {formatCurrency(2000)}
+                </span>
               </div>
 
-              <span
-                className={cn(
-                  "text-red-800 font-medium tracking-[-0.5px]",
-                  !areValuesVisible && "blur-sm"
-                )}
-              >
-                {formatCurrency(2000)}
-              </span>
-            </div>
-
-            <div className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4">
-              <div className="flex-1 flex items-center gap-3">
-                <CategoryIcon type="income" />
-                <div className="">
-                  <strong className="font-bold tracking-[-0.5px] block">
-                    Almoco
-                  </strong>
-                  <strong className="text-sm text-gray-600">04/12/20202</strong>
+              <div className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4">
+                <div className="flex-1 flex items-center gap-3">
+                  <CategoryIcon type="income" />
+                  <div className="">
+                    <strong className="font-bold tracking-[-0.5px] block">
+                      Almoco
+                    </strong>
+                    <strong className="text-sm text-gray-600">
+                      04/12/20202
+                    </strong>
+                  </div>
                 </div>
-              </div>
 
-              <span
-                className={cn(
-                  "text-green-800 font-medium tracking-[-0.5px]",
-                  !areValuesVisible && "blur-sm"
-                )}
-              >
-                {formatCurrency(2000)}
-              </span>
+                <span
+                  className={cn(
+                    "text-green-800 font-medium tracking-[-0.5px]",
+                    !areValuesVisible && "blur-sm"
+                  )}
+                >
+                  {formatCurrency(2000)}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </>
       )}
     </div>
