@@ -2,6 +2,7 @@ import { useAuth } from "../../../app/hooks/useAuth";
 import { Logo } from "../../components/Logo";
 import { Usermenu } from "../../components/UserMenu";
 import { Accounts } from "./components/Accounts";
+import { Fab } from "./components/Fab";
 import { Transactions } from "./components/Transactions";
 import { DashboardProvider } from "./DashboardContext";
 
@@ -14,6 +15,7 @@ export function Dashboard() {
           <Logo classname="h-6 text-teal-900" />
           <Usermenu />
         </header>
+
         <main className="flex-1 flex flex-col md:flex-row gap-4 max-h-full">
           <div className="w-full md:w-1/2">
             <Accounts />
@@ -22,6 +24,8 @@ export function Dashboard() {
             <Transactions />
           </div>
         </main>
+
+        <Fab />
       </div>
     </DashboardProvider>
   );
