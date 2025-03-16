@@ -11,10 +11,18 @@ import { CategoryIcon } from "../../../../components/icons/categories/CategoryIc
 import { useTransactionController } from "./useTransactionController";
 import { Spinner } from "../../../../components/Spinner";
 import EmptyState from "../../../../../assets/EmptyState.svg";
+import { FiltersModal } from "./FiltersModal";
 
 export function Transactions() {
-  const { areValuesVisible, isLoading, transactions, isInitialLoading } =
-    useTransactionController();
+  const {
+    areValuesVisible,
+    isLoading,
+    transactions,
+    isInitialLoading,
+    isFiltersModalOpen,
+    handleCloseFiltersModal,
+    handleOpenFiltersModal,
+  } = useTransactionController();
 
   const hasTransactions = transactions.length > 0;
 
@@ -27,6 +35,11 @@ export function Transactions() {
       )}
       {!isInitialLoading && (
         <>
+          <FiltersModal
+            open={isFiltersModalOpen}
+            onClose={handleCloseFiltersModal}
+          />
+
           <header className="">
             <div className="flex items-center justify-between">
               <button className="flex items-center gap-2">
@@ -36,7 +49,7 @@ export function Transactions() {
                 </span>
                 <ChevronDownIcon className="text-gray-900" />
               </button>
-              <button>
+              <button onClick={handleOpenFiltersModal}>
                 <FilterIcon />
               </button>
             </div>

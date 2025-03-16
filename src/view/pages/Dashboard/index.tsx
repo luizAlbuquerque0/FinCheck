@@ -27,9 +27,6 @@ export function Dashboard() {
         </main>
 
         <Fab />
-        <Modal open title="Modalll">
-          Teste
-        </Modal>
       </div>
     </DashboardProvider>
   );
