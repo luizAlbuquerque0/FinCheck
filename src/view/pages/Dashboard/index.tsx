@@ -1,5 +1,6 @@
 import { useAuth } from "../../../app/hooks/useAuth";
 import { Logo } from "../../components/Logo";
+import { Modal } from "../../components/Modal";
 import { Usermenu } from "../../components/UserMenu";
 import { Accounts } from "./components/Accounts";
 import { Fab } from "./components/Fab";
@@ -26,6 +27,9 @@ export function Dashboard() {
         </main>
 
         <Fab />
+        <Modal open title="Modalll">
+          Teste
+        </Modal>
       </div>
     </DashboardProvider>
   );
