@@ -7,6 +7,7 @@ import { Fab } from "./components/Fab";
 import { Transactions } from "./components/Transactions";
 import { DashboardProvider } from "./DashboardContext";
 import { NewAccountModal } from "./modals/NewAccountModal";
+import { NewTransactionModal } from "./modals/NewTransactionModal";
 
 export function Dashboard() {
   const { signOut } = useAuth();
@@ -31,6 +32,7 @@ export function Dashboard() {
       </div>
 
       <NewAccountModal />
+      <NewTransactionModal />
     </DashboardProvider>
   );
 }
